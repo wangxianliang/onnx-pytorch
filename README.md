@@ -1,19 +1,19 @@
 # onnx-pytorch
 
-
 ![Build Status](https://github.com/fumihwh/onnx-pytorch/actions/workflows/main.yml/badge.svg?branch=main)
-
 
 Generates PyTorch code from ONNX.
 
 ## Installation
 
 - From PyPI
+
 ```bash
 pip install onnx-pytorch
 ```
 
 - From source
+
 ```bash
 git clone https://github.com/fumihwh/onnx-pytorch.git
 cd onnx-pytorch
@@ -21,9 +21,10 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-
 ## Usage
+
 ### By Command Line
+
 ```bash
 python -m onnx_pytorch.code_gen -h
 
@@ -46,6 +47,7 @@ optional arguments:
 ```
 
 ### By Python
+
 ```python
 from onnx_pytorch import code_gen
 code_gen.gen("/path/to/onnx_model", "/path/to/output_dir")
@@ -54,6 +56,7 @@ code_gen.gen("/path/to/onnx_model", "/path/to/output_dir")
 A `model.py` file and `variables/` folder will be created under `output_dir/`.
 
 ## Tutorial
+
 1. Download resnet18 ONNX model.
 
 ```bash
@@ -61,17 +64,20 @@ wget https://github.com/onnx/models/raw/master/vision/classification/resnet/mode
 ```
 
 2. Use `onnx-pytorch` to generate PyTorch code and variables.
+
 ```python
 from onnx_pytorch import code_gen
 code_gen.gen("resnet18-v2-7.onnx", "./")
 ```
 
 3. Test result.
+
 ```python
 import numpy as np
 import onnx
 import onnxruntime
 import torch
+
 torch.set_printoptions(8)
 
 from model import Model
@@ -80,7 +86,7 @@ model = Model()
 model.eval()
 inp = np.random.randn(1, 3, 224, 224).astype(np.float32)
 with torch.no_grad():
-  torch_outputs = model(torch.from_numpy(inp))
+    torch_outputs = model(torch.from_numpy(inp))
 
 onnx_model = onnx.load("resnet18-v2-7.onnx")
 sess_options = onnxruntime.SessionOptions()
@@ -98,6 +104,7 @@ print(
 ```
 
 ## Test
+
 ```bash
 pytest onnx_pytorch/tests
 ```
